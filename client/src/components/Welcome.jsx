@@ -24,9 +24,9 @@ const Welcome = () => {
 
   return (
     <div className="flex w-full justify-center">
-      <div className="flex md:flex-row flex-col items-start justify-between md:p-20 py-12 px-4">
-        <div className="flex flex-1 justify-start flex-col md:mr-10">
-          <h1 className="text-3x1 sm:text-5x1 text-white text-gradient py-1">
+      <div className="flex mf:flex-row flex-col items-start justify-between md:p-20 py-12 px-4">
+        <div className="flex flex-1 justify-start flex-col mf:mr-10">
+          <h1 className="text-3xl sm:text-5xl text-white text-gradient py-1">
             Send Crypto <br /> across the world
           </h1>
           <p className="text-left mt-5 text-white font-light md:w-9/12 w-11/12 text">
@@ -51,7 +51,7 @@ const Welcome = () => {
             <div className={`rounded-br-lg ${commonStyles}`}>Blockchain</div>
           </div>
         </div>
-        <div className="flex flex-col flex-1 items-center justify-start w-full md:mt-0 mt10">
+        <div className="flex flex-col flex-1 items-center justify-start w-full mf:mt-0 mt10">
           <div className="p-3 justify-end items-start flex-col rounded-lg h-40 sm:w-72 w-full my-5 eth-card white-glassmorpisnm">
             <div className="flex justify-between flex-col w-full h-full">
               <div className="flex justify-between items-start">
@@ -101,12 +101,12 @@ const Welcome = () => {
             {false ? (
               <Loader />
             ) : (
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={handleSubmit}
                 className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] rounded-full cursor-pointer"
               >
-                Send now
+                Send Now
               </button>
             )}
           </div>
