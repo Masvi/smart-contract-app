@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
-
+import { PropTypes } from "prop-types";
 import logo from "../../images/logo.png";
 
 const navBarItems = ["Market", "Exchange", "Tutorials", "wallets"];
 
 const NavbarItem = ({ title, classProps }) => {
+  NavbarItem.propTypes = {
+    title: PropTypes.string.isRequired,
+    classProps: PropTypes.string.isRequired
+  };
+
   return <li className={`mx-4 cursor-pointer ${classProps}`}>{title}</li>;
 };
 
