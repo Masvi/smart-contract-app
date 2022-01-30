@@ -8,8 +8,8 @@ const navBarItems = ["Market", "Exchange", "Tutorials", "wallets"];
 
 const NavbarItem = ({ title, classProps }) => {
   NavbarItem.propTypes = {
-    title: PropTypes.string.isRequired,
-    classProps: PropTypes.string.isRequired
+    title: PropTypes.string,
+    classProps: PropTypes.string
   };
 
   return <li className={`mx-4 cursor-pointer ${classProps}`}>{title}</li>;

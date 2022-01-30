@@ -1,7 +1,6 @@
 module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx,json}", "./public/index.html"],
   mode: "jit",
-  darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
       display: ["Open Sans", "sans-serif"],
@@ -31,5 +30,6 @@ module.exports = {
   variants: {
     extend: {},
   },
+  // eslint-disable-next-line no-undef
   plugins: [require("@tailwindcss/forms")],
 };
