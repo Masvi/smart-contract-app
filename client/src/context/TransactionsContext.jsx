@@ -12,7 +12,7 @@ window.ethereum;
 const getEthereumContract = () => {
   const provider = new ethers.providers.Web3Provider(ethereum);
   const signer = provider.getSigner();
-
+  console.log("here ...");
   const transactionContract = new ethers.Contract(
     contractAddress,
     contractABI,
@@ -28,7 +28,7 @@ export const TransactionProvider = ({ children }) => {
     addressTo: "",
     amount: "",
     keyword: "",
-    message: " ",
+    message: "",
   });
 
   const handleChange = (e, name) => {
@@ -86,7 +86,6 @@ export const TransactionProvider = ({ children }) => {
       });
 
       transactionContract.addToBlockchain();
-
     } catch (err) {
       console.log(err);
       throw new Error("No ethereum object");
@@ -103,7 +102,6 @@ export const TransactionProvider = ({ children }) => {
         connectWallet,
         currentAccount,
         formData,
-        setFormData,
         handleChange,
         sendTransaction,
       }}
