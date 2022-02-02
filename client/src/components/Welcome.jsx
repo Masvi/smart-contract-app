@@ -11,15 +11,14 @@ import { Loader, Transactions } from ".";
 const commonStyles =
   "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
 
-const Input = ({ placeholder, name, type, value }) => {
+const Input = ({ placeholder, name, type, value, handleChange }) => {
   Input.propTypes = {
     placeholder: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.string,
     value: PropTypes.object,
+    handleChange: PropTypes.func,
   };
-
-  const handleChange = () => {};
 
   return (
     <input
@@ -38,12 +37,11 @@ const Welcome = () => {
     connectWallet, 
     currentAccount, 
     formData, 
-    sendTransaction, 
-    handleChange 
+    handleChange,
+    sendTransaction
   } = useContext(TransactionContext);
 
   const handleSubmit = (e) => {
-    console.log('handle');
     const { addressTo, amout, keyword, message } = formData;
 
     e.preventDefault();
@@ -122,13 +120,13 @@ const Welcome = () => {
               placeholder="Keyword (Gif)"
               name="keyword"
               type="text"
-              handleChange={() => {}}
+              handleChange={handleChange}
             />
             <Input
               placeholder="Enter Message"
               name="message"
               type="text"
-              handleChange={() => {}}
+              handleChange={handleChange}
             />
 
             <div className="h-[1px] w-full bg-gray-400 my-2" />

@@ -12,7 +12,7 @@ window.ethereum;
 const getEthereumContract = () => {
   const provider = new ethers.providers.Web3Provider(ethereum);
   const signer = provider.getSigner();
-  console.log("here ...");
+
   const transactionContract = new ethers.Contract(
     contractAddress,
     contractABI,
@@ -30,6 +30,8 @@ export const TransactionProvider = ({ children }) => {
     keyword: "",
     message: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [transactionCount, setTransactionCount] = useState(localStorage.getItem('transactionCount'));
 
   const handleChange = (e, name) => {
     setFormData((prevState) => ({ ...prevState, [name]: e.target.value }));
@@ -85,7 +87,23 @@ export const TransactionProvider = ({ children }) => {
         ],
       });
 
-      transactionContract.addToBlockchain();
+      const transactionHash = await transactionContract.addToBlockchain(
+        addressTo,
+        parsedAmout,
+        message,
+        keyword
+      );
+
+      setIsLoading(true);
+      console.log(`loading - ${transactionHash.hash}`);
+      await transactionHash.wait();
+
+      setIsLoading(false);
+      console.log(`Success - ${transactionHash.hash}`);
+
+      const transactionCount = await transactionContract.getTransactionCount();
+
+      setTransactionCount(transactionCount.toNumber());
     } catch (err) {
       console.log(err);
       throw new Error("No ethereum object");
