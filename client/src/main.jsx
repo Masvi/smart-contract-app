@@ -8,7 +8,7 @@ ReactDOM.render(
   <TransactionProvider>
     <React.StrictMode>
       <App />
-    </React.StrictMode>,
+    </React.StrictMode>
   </TransactionProvider>,
   document.getElementById("root")
 );
