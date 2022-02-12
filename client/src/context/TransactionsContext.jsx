@@ -32,6 +32,7 @@ export const TransactionProvider = ({ children }) => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [transactionCount, setTransactionCount] = useState(localStorage.getItem('transactionCount'));
+  const [transactions, setTransactions] = useState([]);
 
   const handleChange = (e, name) => {
     setFormData((prevState) => ({ ...prevState, [name]: e.target.value }));
@@ -43,7 +44,18 @@ export const TransactionProvider = ({ children }) => {
     
       const transactionContract = getEthereumContract();
       const availableTransactions = await transactionContract.getAllTransactions();
-      console.log(availableTransactions)
+     
+      const structuredTransactions = availableTransactions.map((transaction) => ({
+        addressTo: transaction.receiver,
+        addressFrom: transaction.sender,
+        timestamp: new Date(transaction.timestamp.toNumber() * 1000).toLocaleString(),
+        message: transaction.message,
+        keyword: transaction.keyword,
+        amount: parseInt(transaction.amount._hex) / (10 ** 18)
+      }));
+
+      setTransactions(structuredTransactions);
+
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +88,14 @@ export const TransactionProvider = ({ children }) => {
       window.localStorage.setItem("transactionCount", transactionCount);
 
     } catch (error) {
-      console.log(error);
+      const message = error.message || "";
+      if (!message.match(/already processing/i)) { throw error; }
+  
+      const href = window.location.href;
+      if (href.match(/connectOnLoad/)) { window.location.reload(); return; }
+  
+      const delimiter = href.match(/\?/) ? "&" : "?";
+      window.location.href += delimiter + "connectOnLoad=true";
       throw new Error("No ethereum object");
     }
   }
@@ -89,8 +108,15 @@ export const TransactionProvider = ({ children }) => {
       });
       setCurrentAccount(requestAccounts[0]);
     } catch (error) {
-      console.log(error);
-      throw new Error("No ethereum object");
+
+      const message = error.message || "";
+      if (!message.match(/already processing/i)) { throw error; }
+  
+      const href = window.location.href;
+      if (href.match(/connectOnLoad/)) { window.location.reload(); return; }
+  
+      const delimiter = href.match(/\?/) ? "&" : "?";
+      window.location.href += delimiter + "connectOnLoad=true";
     }
   };
 
@@ -150,6 +176,8 @@ export const TransactionProvider = ({ children }) => {
         formData,
         handleChange,
         sendTransaction,
+        transactions, 
+        isLoading
       }}
     >
       {children}
